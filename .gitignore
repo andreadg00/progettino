@@ -1,0 +1,12 @@
+# --- DJANGO ---
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.sqlite3
+db.sqlite3
+.env
+
+# --- SISTEMA ---
+.DS_Store
+**/.DS_Store
