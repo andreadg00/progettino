@@ -1,0 +1,43 @@
+<div style="padding: 20px;">
+  <h1>Gestisci Studenti</h1>
+
+  <button (click)="mostraForm = !mostraForm">
+    {{ mostraForm ? 'Nascondi' : 'Aggiungi Studente' }}  
+  </button>
+  <hr>
+
+  <div *ngIf="mostraForm">
+    <h2>Aggiungi Nuovo Studente</h2>
+    <form [formGroup]="studenteForm" (ngSubmit)="addStudente()">
+      <label for="nome">Nome:</label>
+      <input id="Nome" formControlName="nome" required>
+      <br>
+      <label for="cognome">Cognome:</label>
+      <input id="Cognome" formControlName="cognome" required>
+      <br>
+      <label for="matricola">Matricola:</label>
+      <input id="Matricola" type="number" formControlName="matricola" required>
+      <br>
+      <button type="submit" [disabled]="!studenteForm.valid">Aggiungi Studente</button>
+    </form>
+  </div>
+
+  <table border="1" style="width:100%; margin-top:20px;">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Matricola</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let studente of studenti | async">
+        <td>{{studente.id}}</td>
+        <td>{{ studente.nome }}</td>
+        <td>{{ studente.cognome }}</td>
+        <td>{{ studente.matricola }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
