@@ -1,9 +1,11 @@
 <div style="padding: 20px;">
-  <h1>Gestisci Studenti</h1>
+  <h4>Gestisci Studenti</h4>
 
-  <button (click)="mostraForm = !mostraForm">
-    {{ mostraForm ? 'Nascondi' : 'Aggiungi Studente' }}  
-  </button>
+  <p-button 
+    [label]="mostraForm ? 'Nascondi' : 'Aggiungi Studente'" 
+    [icon]="mostraForm ? 'pi pi-minus' : 'pi pi-plus'"
+    (click)="mostraForm = !mostraForm">
+  </p-button>
   <hr>
 
   <div *ngIf="mostraForm">
@@ -22,22 +24,22 @@
     </form>
   </div>
 
-  <table border="1" style="width:100%; margin-top:20px;">
-    <thead>
+  <p-table [value]="studenti$" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
         <th>Nome</th>
         <th>Cognome</th>
         <th>Matricola</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let studente of studenti | async">
+    </ng-template>
+    <ng-template pTemplate="body" let-studente>
+      <tr >
         <td>{{studente.id}}</td>
         <td>{{ studente.nome }}</td>
         <td>{{ studente.cognome }}</td>
         <td>{{ studente.matricola }}</td>
       </tr>
-    </tbody>
-  </table>
+    </ng-template>
+  </p-table>
 </div>

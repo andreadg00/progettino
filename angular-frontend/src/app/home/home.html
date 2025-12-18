@@ -1,0 +1,98 @@
+<div class="container">
+  
+  <div class="header">
+    <h1>Gestione Studenti</h1>
+    
+    <p-button
+        [label]="mostraForm ? 'Annulla' : 'Nuovo Studente'" 
+        [icon]="mostraForm ? 'pi pi-times' : 'pi pi-plus'"
+        [outlined]="mostraForm"
+        severity="primary"
+        (onClick)="mostraForm = !mostraForm">
+    </p-button>
+  </div>
+
+  @if (mostraForm) {
+    <div class="form-panel">
+        <h3>Inserisci Nuovo Studente</h3>
+        <form [formGroup]="studenteForm" (ngSubmit)="addStudente()">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="nome">Nome</label>
+                    <input pInputText id="nome" formControlName="nome" placeholder="Es. Mario" />
+                </div>
+                <div class="field">
+                    <label for="cognome">Cognome</label>
+                    <input pInputText id="cognome" formControlName="cognome" placeholder="Es. Rossi" />
+                </div>
+                <div class="field">
+                    <label for="matricola">Matricola</label>
+                    <input pInputText id="matricola" formControlName="matricola" placeholder="Es. 12345" />
+                </div>
+                <div class="field action">
+                    <p-button label="Salva Studente" icon="pi pi-check" type="submit" 
+                              [disabled]="!studenteForm.valid"></p-button>
+                </div>
+            </div>
+        </form>
+    </div>
+  }
+
+  <hr class="divider">
+
+  @if (studenti$ | async; as listaStudenti) {
+    
+    <p-table [value]="listaStudenti" dataKey="id" styleClass="p-datatable-striped">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 4rem"></th> 
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Matricola</th>
+          <th style="width: 10rem">Azioni</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-studente let-expanded="expanded">
+        <tr>
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="studente" 
+                    class="p-button-text p-button-rounded p-button-plain" 
+                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
+            </button>
+          </td>
+          <td>{{ studente.nome }}</td>
+          <td>{{ studente.cognome }}</td>
+          <td>{{ studente.matricola }}</td>
+          <td>
+              <p-button icon="pi pi-user-edit" label="Modifica"
+                        styleClass="p-button-sm p-button-outlined"
+                        [routerLink]="['/studente', studente.id]">
+              </p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #expandedrow let-studente>
+        <tr>
+          <td colspan="5">
+              <div class="p-3">
+                  <app-carriera 
+                      [studentId]="studente.id" 
+                      [studentName]="studente.nome + ' ' + studente.cognome">
+                  </app-carriera>
+              </div>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+  } @else {
+    <div class="text-center p-5">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+        <p>Caricamento lista studenti...</p>
+    </div>
+  }
+</div>

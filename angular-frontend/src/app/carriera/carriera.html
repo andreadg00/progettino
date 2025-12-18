@@ -1,0 +1,26 @@
+<div class ="carriera-container" style="font-size: 0.9rem">
+  <h1>Carriera di <span> {{ studentName }} </span></h1>
+  <p-table [value]="(carrieraData$ | async) ?? []" [tableStyle]="{'font-size': '0.85rem'}" styleClass="p-datatable-sm p-datatable-gridlines">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Materia</th> 
+        <th>CFU</th>
+        <th>Voto</th>
+        <th>Data Esame</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-esame>
+      <tr>
+        <td>{{ esame.materia }}</td>
+        <td style="font-weight: bold; color:green;">{{ esame.cfu }}</td>
+        <td>{{ esame.voto | number:'1.0-2'}}</td>
+        <td>{{ esame.data_esame | date:'dd/MM/yyyy' }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4">Nessun esame trovato per questo studente.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

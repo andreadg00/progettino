@@ -1,1 +1,47 @@
-<p>student works!</p>
+<div class="view-container">
+  
+  <div class="top-bar">
+    <p-button label="Torna alla Lista" icon="pi pi-arrow-left" 
+              [text]="true" routerLink="/"></p-button>
+  </div>
+
+  @if (studente$ | async; as studente) {
+    <p-card styleClass="shadow-2 student-card">
+        
+        <ng-template pTemplate="header">
+            <div class="card-header-bg">
+                <div class="avatar-circle">
+                    <i class="pi pi-user" style="font-size: 2rem; color: white;"></i>
+                </div>
+            </div>
+        </ng-template>
+
+        <div class="info-content">
+            <h2 class="student-name">
+                {{ studente.nome }} {{ studente.cognome }}
+            </h2>
+            
+            <div class="grid-info">
+                <div class="info-item">
+                    <span class="label">Matricola</span>
+                    <span class="value">
+                        <p-tag [value]="studente.matricola" severity="info"></p-tag>
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">ID Sistema</span>
+                    <span class="value">#{{ studente.id }}</span>
+                </div>
+            </div>
+        </div>
+    </p-card>
+  } @else if (isLoading) {
+      <div class="loading-state">
+          <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+          <p>Caricamento profilo...</p>
+      </div>
+  } @else {
+      <p>Studente non trovato.</p>
+  }
+</div>
