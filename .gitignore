@@ -10,3 +10,8 @@ db.sqlite3
 # --- SISTEMA ---
 .DS_Store
 **/.DS_Store
+
+node_modules/
+.angular
+dist/
+.docker/
